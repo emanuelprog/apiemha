@@ -1,0 +1,38 @@
+app:
+  datasource:
+    dbemha:
+      url: ${DBEMHA_URL_PROD}
+      username: ${DBEMHA_USERNAME_PROD}
+      password: ${DBEMHA_PASSWORD_PROD}
+
+    dbacessos:
+      url: ${DBACESSOS_URL_PROD}
+      username: ${DBACESSOS_USERNAME_PROD}
+      password: ${DBACESSOS_PASSWORD_PROD}
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: com.br.gov.ms.campogrande.apiemha.config.LegacyPostgreSQLDialect
+
+  sql:
+    init:
+      platform: postgres
+
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: https://autenticacao-h.campogrande.ms.gov.br/auth/realms/campograndems
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://autenticacao-h.campogrande.ms.gov.br/auth/realms/campograndems/protocol/openid-connect/certs
+
+services:
+  emha-api: https://emha.campogrande.ms.gov.br/emha/api

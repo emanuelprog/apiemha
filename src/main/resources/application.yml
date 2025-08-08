@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: apiemha
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: com.br.gov.ms.campogrande.apiemha.config.LegacyPostgreSQLDialect
+
+server:
+  port: 8081
+  max-http-request-header-size: 32KB

@@ -30,7 +30,10 @@ public class SecurityConfig {
                                 "/housing-complexes",
                                 "/housing-complexes/commercial-module",
                                 "/inscription/person-online",
-                                "/debt/extract"
+                                "/debt/extract",
+                                "/chart",
+                                "/profession",
+                                "/deficiency"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/person-online/registered",

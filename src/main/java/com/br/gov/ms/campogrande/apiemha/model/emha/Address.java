@@ -25,7 +25,7 @@ public class Address {
     private String zipCode; // CEP do endereço
 
     @Column(name = "logone", length = 100)
-    private String logradouro; // Logradouro
+    private String street; // Logradouro
 
     @Column(name = "cidone", length = 100)
     private String city; // Cidade

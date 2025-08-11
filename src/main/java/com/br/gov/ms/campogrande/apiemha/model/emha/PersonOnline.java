@@ -233,11 +233,13 @@ public class PersonOnline {
     @Column(name = "doeonl", length = 1)
     private String isBloodDonor; // DOADOR DE SANGUE SIM OU NÃO (S/N)
 
-    @Column(name = "prconl")
-    private Long spouseProfessionId; // Profissão do cônjuge
+    @ManyToOne
+    @JoinColumn(name = "prconl", referencedColumnName = "codpro")
+    private Profession spouseProfession; // Profissão do cônjuge
 
-    @Column(name = "stconl")
-    private Long spouseProfessionStatusId; // Situação profissional do cônjuge
+    @ManyToOne
+    @JoinColumn(name = "stconl", referencedColumnName = "codtab")
+    private Chart spouseProfessionStatus; // Situação profissional do cônjuge
 
     @Column(name = "vioonl")
     private Boolean isViolenceVictim; // Mulher vítima de violência
@@ -255,13 +257,13 @@ public class PersonOnline {
     private Boolean caponl;
 
     @Column(name = "mpeonl")
-    private Boolean mpeonl;
+    private Boolean liveOrWork3KmFromTheDevelopment; // Mora ou Trabalha a 3km do Empreendimento
 
     @Column(name = "pimonl")
-    private Boolean pimonl;
+    private Boolean ownsProperty; // Possui Imóvel
 
     @Column(name = "dcionl")
-    private Boolean dcionl;
+    private Boolean hasDisablingChronicDisease;
 
     @Column(name = "cras")
     private Boolean cras; // É acompanhado pelo CRAS

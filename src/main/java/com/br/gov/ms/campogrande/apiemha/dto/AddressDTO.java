@@ -11,7 +11,7 @@ public class AddressDTO {
 
     private Long id;
     private String zipCode;
-    private String logradouro;
+    private String street;
     private String city;
     private String region;
     private String neighborhood;

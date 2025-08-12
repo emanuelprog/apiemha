@@ -8,4 +8,6 @@ import java.util.List;
 public interface InscriptionRepository extends JpaRepository<Inscription, Long> {
 
     List<Inscription> findAllByPersonOnline_Id(Long personOnlineId);
+
+    List<Inscription> findAllByPersonOnline_IdAndEventComponent_Id(Long personOnlineId, Long eventComponentId);
 }

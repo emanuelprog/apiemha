@@ -7,4 +7,6 @@ import org.springframework.data.domain.Pageable;
 public interface PersonService {
 
     Page<PersonDTO.Summary> findBenefitedSummary(String cpf, String name, Pageable pageable);
+
+    PersonDTO findByCpf(String cpf);
 }

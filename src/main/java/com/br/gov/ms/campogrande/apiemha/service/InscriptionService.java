@@ -8,6 +8,8 @@ public interface InscriptionService {
 
     List<InscriptionDTO> findAllByPersonOnline(Long personOnlineId);
 
+    List<InscriptionDTO> findAllBySpouseAndEventComponent(String cpf, Long eventComponentId);
+
     InscriptionDTO create(InscriptionDTO inscriptionDTO);
 
     InscriptionDTO update(Long id, InscriptionDTO inscriptionDTO);

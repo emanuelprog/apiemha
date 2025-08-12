@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface BenefitedService {
 
-    List<BenefitedDTO> findAllByPerson(Long personId);
+    List<BenefitedDTO> findAllByPersonOnline(String cpf);
 }

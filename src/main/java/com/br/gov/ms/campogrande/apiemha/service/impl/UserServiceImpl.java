@@ -1,6 +1,7 @@
 package com.br.gov.ms.campogrande.apiemha.service.impl;
 
 import com.br.gov.ms.campogrande.apiemha.dto.UserDTO;
+import com.br.gov.ms.campogrande.apiemha.exception.NotFoundException;
 import com.br.gov.ms.campogrande.apiemha.repository.acessos.UserRepository;
 import com.br.gov.ms.campogrande.apiemha.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean findUserByLoginAndPassword(UserDTO userDTO) {
-        return userRepository.findByLoginAndPassword(userDTO.getLogin(), md5(userDTO.getPassword())).isPresent();
+        userRepository.findByLoginAndPassword(
+                userDTO.getLogin(),
+                md5(userDTO.getPassword())
+        ).orElseThrow(() -> new NotFoundException("Usuário ou senha inválidos"));
+
+        return true;
     }
 
     private String md5(String input) {

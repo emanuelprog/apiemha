@@ -45,6 +45,15 @@ public class PersonOnlineController {
         return ResponseUtil.generateResponse(personOnlineService.findPersonOnlineByFilters(filter.getCpf(),filter.getRegistrationPassword()), HttpStatus.OK);
     }
 
+    @PostMapping("/spouse")
+    @Operation(summary = "Busca o cônjuge do titular", description = "Consulta por CPF para verificar se o titular já possui cônjuge cadastrado.")
+    public ResponseEntity<Object> findSpouse(
+            @RequestBody
+            @Parameter(description = "Filtros de CPF") PersonOnlineFilter filter
+    ) {
+        return ResponseUtil.generateResponse(personOnlineService.findPersonOnlineBySpouse(filter.getCpf()), HttpStatus.OK);
+    }
+
     @PostMapping
     @Operation(summary = "Cadastrar nova pessoa online", description = "Realiza o cadastro de uma nova pessoa no sistema de inscrição online.")
     public ResponseEntity<Object> createPersonOnline(

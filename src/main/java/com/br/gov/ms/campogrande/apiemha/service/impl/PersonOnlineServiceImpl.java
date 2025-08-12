@@ -1,6 +1,7 @@
 package com.br.gov.ms.campogrande.apiemha.service.impl;
 
 import com.br.gov.ms.campogrande.apiemha.dto.PersonOnlineDTO;
+import com.br.gov.ms.campogrande.apiemha.exception.AlreadyExistsException;
 import com.br.gov.ms.campogrande.apiemha.exception.BadRequestException;
 import com.br.gov.ms.campogrande.apiemha.exception.NotFoundException;
 import com.br.gov.ms.campogrande.apiemha.mapper.PersonOnlineMapper;
@@ -51,6 +52,19 @@ public class PersonOnlineServiceImpl implements PersonOnlineService {
         return personOnlineRepository.findPersonOnlineByCpfOrRegistrationPassword(cpf, registrationPassword)
                 .map(personOnlineMapper::toDTO)
                 .orElseThrow(() -> new NotFoundException("Nenhum cadastro encontrado"));
+    }
+
+    @Override
+    public PersonOnlineDTO findPersonOnlineBySpouse(String cpf) {
+        Optional<PersonOnline> spouse = personOnlineRepository.findPersonOnlineBySpouseCpf(cpf);
+
+        if (spouse.isPresent()) {
+            throw new AlreadyExistsException(
+                    "Não é possível realizar cadastro. CPF já cadastrado como cônjuge de um inscrito!"
+            );
+        }
+
+        return null;
     }
 
     @Override
@@ -110,7 +124,7 @@ public class PersonOnlineServiceImpl implements PersonOnlineService {
     }
 
     private PersonOnline applyLegacySystemCode(PersonOnline personOnline) {
-        Optional.ofNullable(personRepository.findByCpf(personOnline.getCpf()))
+        personRepository.findByCpf(personOnline.getCpf())
                 .map(Person::getId)
                 .ifPresent(personOnline::setLegacySystemCode);
 

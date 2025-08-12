@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
@@ -97,5 +98,5 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
             @Param("name") String name
     );
 
-    Person findByCpf(String cpf);
+    Optional<Person> findByCpf(String cpf);
 }

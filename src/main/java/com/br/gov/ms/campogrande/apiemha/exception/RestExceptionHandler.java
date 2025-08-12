@@ -29,4 +29,14 @@ public class RestExceptionHandler {
 
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException ex) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put("code", HttpStatus.CONFLICT.value());
+        map.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(map, HttpStatus.CONFLICT);
+    }
 }

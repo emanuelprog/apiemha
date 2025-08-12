@@ -44,4 +44,6 @@ public interface PersonOnlineRepository extends JpaRepository<PersonOnline, Long
     );
 
     Optional<PersonOnline> findPersonOnlineByCpfOrRegistrationPassword(String cpf, Long registrationPassword);
+
+    Optional<PersonOnline> findPersonOnlineBySpouseCpf(String cpf);
 }

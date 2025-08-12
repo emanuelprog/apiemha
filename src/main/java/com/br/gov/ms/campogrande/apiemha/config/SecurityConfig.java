@@ -33,7 +33,8 @@ public class SecurityConfig {
                                 "/debt/extract",
                                 "/chart",
                                 "/profession",
-                                "/deficiency"
+                                "/deficiency",
+                                "/event-component/event"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/person-online/registered",

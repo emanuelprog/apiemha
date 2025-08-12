@@ -11,6 +11,8 @@ public interface PersonOnlineService {
 
     PersonOnlineDTO findPersonOnlineByFilters(String cpf, Long registrationPassword);
 
+    PersonOnlineDTO findPersonOnlineBySpouse(String cpf);
+
     PersonOnlineDTO create(PersonOnlineDTO personOnlineDTO);
 
     PersonOnlineDTO update(Long id, PersonOnlineDTO personOnlineDTO);

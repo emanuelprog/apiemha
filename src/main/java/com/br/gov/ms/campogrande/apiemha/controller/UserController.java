@@ -19,7 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping
+    @PostMapping
     @Operation(summary = "Buscar usuário por login e senha", description = "Retorna os dados do usuário a partir do login e senha informados. Usado para autenticação.")
     public ResponseEntity<Object> findUser(
             @RequestBody

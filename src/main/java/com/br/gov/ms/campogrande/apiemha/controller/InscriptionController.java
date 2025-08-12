@@ -1,6 +1,7 @@
 package com.br.gov.ms.campogrande.apiemha.controller;
 
 import com.br.gov.ms.campogrande.apiemha.dto.InscriptionDTO;
+import com.br.gov.ms.campogrande.apiemha.filter.PersonOnlineFilter;
 import com.br.gov.ms.campogrande.apiemha.service.InscriptionService;
 import com.br.gov.ms.campogrande.apiemha.util.ResponseUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,17 @@ public class InscriptionController {
             @RequestParam Long personOnlineId
     ) {
         return ResponseUtil.generateResponse(inscriptionService.findAllByPersonOnline(personOnlineId), HttpStatus.OK);
+    }
+
+    @PostMapping("/spouse")
+    @Operation(summary = "Listar inscrições por cônjuge e ID do componente do evento", description = "Retorna todas as inscrições vinculadas a um determinado cônjuge e ID do componente do evento cadastrados no sistema online.")
+    public ResponseEntity<Object> findAllBySpouse(
+            @Parameter(description = "Filtros de CPF")
+            @RequestBody PersonOnlineFilter filter,
+            @Parameter(description = "ID do componente do evento")
+            @RequestParam Long eventComponentId
+    ) {
+        return ResponseUtil.generateResponse(inscriptionService.findAllBySpouseAndEventComponent(filter.getCpf(), eventComponentId), HttpStatus.OK);
     }
 
     @PostMapping

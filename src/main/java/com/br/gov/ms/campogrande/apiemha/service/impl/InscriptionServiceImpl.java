@@ -2,11 +2,14 @@ package com.br.gov.ms.campogrande.apiemha.service.impl;
 
 import com.br.gov.ms.campogrande.apiemha.dto.InscriptionDTO;
 import com.br.gov.ms.campogrande.apiemha.dto.PersonOnlineDTO;
+import com.br.gov.ms.campogrande.apiemha.exception.AlreadyExistsException;
 import com.br.gov.ms.campogrande.apiemha.exception.BadRequestException;
 import com.br.gov.ms.campogrande.apiemha.exception.NotFoundException;
 import com.br.gov.ms.campogrande.apiemha.mapper.InscriptionMapper;
 import com.br.gov.ms.campogrande.apiemha.model.emha.Inscription;
+import com.br.gov.ms.campogrande.apiemha.model.emha.PersonOnline;
 import com.br.gov.ms.campogrande.apiemha.repository.emha.InscriptionRepository;
+import com.br.gov.ms.campogrande.apiemha.repository.emha.PersonOnlineRepository;
 import com.br.gov.ms.campogrande.apiemha.service.InscriptionService;
 import com.br.gov.ms.campogrande.apiemha.service.PersonOnlineService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     private final InscriptionMapper inscriptionMapper;
 
     private final PersonOnlineService personOnlineService;
+    private final PersonOnlineRepository personOnlineRepository;
 
     @Override
     public List<InscriptionDTO> findAllByPersonOnline(Long personOnlineId) {
@@ -32,6 +36,29 @@ public class InscriptionServiceImpl implements InscriptionService {
                 .stream()
                 .map(inscriptionMapper::toDTO)
                 .toList();
+    }
+
+    @Override
+    public List<InscriptionDTO> findAllBySpouseAndEventComponent(String cpf, Long eventComponentId) {
+        Optional<PersonOnline> personOnline = personOnlineRepository.findPersonOnlineByCpfOrRegistrationPassword(cpf, null);
+
+        if (personOnline.isEmpty()) {
+            return null;
+        } else {
+            Optional<PersonOnline> spouse = personOnlineRepository.findPersonOnlineByCpfOrRegistrationPassword(personOnline.get().getSpouseCpf(), null);
+
+            if (spouse.isEmpty()) {
+                return null;
+            }
+
+            List<Inscription> inscriptions = inscriptionRepository.findAllByPersonOnline_IdAndEventComponent_Id(spouse.get().getId(), eventComponentId);
+
+            if (!inscriptions.isEmpty()) {
+                throw new AlreadyExistsException("Não é possível realizar a inscrição. CPF já cadastrado como cônjuge de um inscrito!");
+            }
+        }
+
+        return null;
     }
 
     @Override

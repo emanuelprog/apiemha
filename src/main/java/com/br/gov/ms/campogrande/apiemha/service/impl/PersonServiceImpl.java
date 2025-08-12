@@ -45,4 +45,9 @@ public class PersonServiceImpl implements PersonService {
 
         return new PageImpl<>(summaries, pageable, total);
     }
+
+    @Override
+    public PersonDTO findByCpf(String cpf) {
+        return personRepository.findByCpf(cpf).map(personMapper::toDTO).orElse(null);
+    }
 }

@@ -4,9 +4,7 @@ import com.br.gov.ms.campogrande.apiemha.dto.BenefitedDTO;
 import com.br.gov.ms.campogrande.apiemha.dto.ContractDTO;
 import com.br.gov.ms.campogrande.apiemha.dto.PersonDTO;
 import com.br.gov.ms.campogrande.apiemha.exception.AlreadyExistsException;
-import com.br.gov.ms.campogrande.apiemha.mapper.BenefitedMapper;
 import com.br.gov.ms.campogrande.apiemha.model.emha.Benefited;
-import com.br.gov.ms.campogrande.apiemha.model.emha.Contract;
 import com.br.gov.ms.campogrande.apiemha.repository.emha.BenefitedRepository;
 import com.br.gov.ms.campogrande.apiemha.service.BenefitedService;
 import com.br.gov.ms.campogrande.apiemha.service.ContractService;
@@ -31,7 +29,7 @@ public class BenefitedServiceImpl implements BenefitedService {
 
         if (personDTO != null) {
             List<ContractDTO> contracts = contractService.findContractsByPerson(personDTO.getId());
-            List<Benefited> benefiteds = benefitedRepository.findAllByPerson_Id(personDTO.getId());
+            List<Benefited> benefiteds = benefitedRepository.findAllByPerson_IdAndAndBenefited(personDTO.getId(), "S");
 
             if (!contracts.isEmpty() || !benefiteds.isEmpty()) {
                 throw new AlreadyExistsException("CPF já beneficiado!");

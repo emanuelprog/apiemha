@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface BenefitedRepository extends JpaRepository<Benefited, Long> {
 
-    List<Benefited> findAllByPerson_Id(Long personId);
+    List<Benefited> findAllByPerson_IdAndAndBenefited(Long personId, String benefited);
 }

@@ -62,6 +62,19 @@ public class InscriptionServiceImpl implements InscriptionService {
     }
 
     @Override
+    public InscriptionDTO findByPersonOnlineAndEventComponent(String cpf, Long eventComponentId) {
+        return personOnlineRepository
+                .findPersonOnlineByCpfOrRegistrationPassword(cpf, null)
+                .flatMap(personOnline -> inscriptionRepository
+                        .findAllByPersonOnline_IdAndEventComponent_Id(personOnline.getId(), eventComponentId)
+                        .stream()
+                        .findFirst()
+                        .map(inscriptionMapper::toDTO)
+                )
+                .orElse(null);
+    }
+
+    @Override
     public InscriptionDTO create(InscriptionDTO dto) {
         dto.setPersonOnline(resolvePersonOnline(dto.getPersonOnline()));
 

@@ -40,6 +40,17 @@ public class InscriptionController {
         return ResponseUtil.generateResponse(inscriptionService.findAllBySpouseAndEventComponent(filter.getCpf(), eventComponentId), HttpStatus.OK);
     }
 
+    @PostMapping("/person-online/event-component")
+    @Operation(summary = "Listar inscrições por cpf e ID do componente do evento", description = "Retorna todas as inscrições vinculadas a um determinado cpf e ID do componente do evento cadastrados no sistema online.")
+    public ResponseEntity<Object> findByPersonOnlineAndEventComponent(
+            @Parameter(description = "Filtros de CPF")
+            @RequestBody PersonOnlineFilter filter,
+            @Parameter(description = "ID do componente do evento")
+            @RequestParam Long eventComponentId
+    ) {
+        return ResponseUtil.generateResponse(inscriptionService.findByPersonOnlineAndEventComponent(filter.getCpf(), eventComponentId), HttpStatus.OK);
+    }
+
     @PostMapping
     @Operation(summary = "Cadastrar nova inscrição", description = "Realiza o cadastro de uma nova inscrição vinculada a uma pessoa.")
     public ResponseEntity<Object> createInscription(

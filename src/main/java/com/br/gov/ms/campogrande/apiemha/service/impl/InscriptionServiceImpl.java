@@ -12,6 +12,7 @@ import com.br.gov.ms.campogrande.apiemha.repository.emha.InscriptionRepository;
 import com.br.gov.ms.campogrande.apiemha.repository.emha.PersonOnlineRepository;
 import com.br.gov.ms.campogrande.apiemha.service.InscriptionService;
 import com.br.gov.ms.campogrande.apiemha.service.PersonOnlineService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -75,6 +76,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     }
 
     @Override
+    @Transactional
     public InscriptionDTO create(InscriptionDTO dto) {
         dto.setPersonOnline(resolvePersonOnline(dto.getPersonOnline()));
 
@@ -84,6 +86,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     }
 
     @Override
+    @Transactional
     public InscriptionDTO update(Long id, InscriptionDTO dto) {
         return inscriptionRepository.findById(id)
                 .map(existing -> {

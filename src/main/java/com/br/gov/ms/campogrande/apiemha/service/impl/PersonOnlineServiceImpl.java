@@ -10,6 +10,7 @@ import com.br.gov.ms.campogrande.apiemha.model.emha.PersonOnline;
 import com.br.gov.ms.campogrande.apiemha.repository.emha.PersonOnlineRepository;
 import com.br.gov.ms.campogrande.apiemha.repository.emha.PersonRepository;
 import com.br.gov.ms.campogrande.apiemha.service.PersonOnlineService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -68,6 +69,7 @@ public class PersonOnlineServiceImpl implements PersonOnlineService {
     }
 
     @Override
+    @Transactional
     public PersonOnlineDTO create(PersonOnlineDTO dto) {
         return Optional.of(dto)
                 .map(personOnlineMapper::toModel)
@@ -82,6 +84,7 @@ public class PersonOnlineServiceImpl implements PersonOnlineService {
     }
 
     @Override
+    @Transactional
     public PersonOnlineDTO update(Long id, PersonOnlineDTO dto) {
         return personOnlineRepository.findById(id)
                 .map(existing -> {
